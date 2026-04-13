@@ -1,17 +1,35 @@
 # CommCoach
 
-A human-centered AI communication coach for workplace messaging. Research prototype built with Next.js + Claude API.
+A human-centered AI communication coach for workplace messaging. Research prototype built with Next.js + Claude API + MongoDB.
 
 ## Setup
 
 ```bash
 npm install
 cp .env.example .env.local
-# Add your Anthropic API key to .env.local
+# Add your keys to .env.local (see Environment Variables below)
 npm run dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000).
+
+## Environment Variables
+
+| Variable | Required | Description |
+|---|---|---|
+| `ANTHROPIC_API_KEY` | Yes | Claude API key for message analysis |
+| `MONGODB_URI` | No | MongoDB connection string for persistent session storage |
+
+Without `MONGODB_URI`, sessions fall back to browser `localStorage` only.
+
+## Features
+
+- **Pre-send review** — paste a draft message and get structured feedback before sending
+- **Reflect** — analyze a sent message or conversation after the fact
+- **Dashboard** — analytics across all sessions (scores, trends, dimension breakdown)
+- **Session log** — full history with expandable detail, user ratings, and JSON export
+- Configurable feedback style (concise / balanced / detailed) and intervention mode (gentle / direct)
+- 6 communication dimensions scored per analysis
 
 ## Architecture
 
@@ -22,7 +40,10 @@ src/
 │   ├── pre-send/page.tsx   # Pre-send review mode
 │   ├── reflect/page.tsx    # Post-hoc reflection mode
 │   ├── log/page.tsx        # Session log + export
-│   └── api/analyze/        # POST endpoint — calls Claude API
+│   ├── dashboard/page.tsx  # Analytics dashboard
+│   └── api/
+│       ├── analyze/        # POST — calls Claude API, saves session
+│       └── sessions/       # GET / POST / PATCH session records
 ├── components/
 │   ├── controls/           # Dimension selector, audience/intent dropdowns, toggles
 │   ├── feedback/           # FeedbackCard and all sub-sections
@@ -32,12 +53,21 @@ src/
 │   └── rating/             # Self-rating form (usefulness/relevance/apply)
 ├── lib/
 │   ├── anthropic.ts        # Anthropic client singleton
+│   ├── mongodb.ts          # MongoDB client singleton
 │   ├── dimensions.ts       # Communication dimension definitions
 │   ├── prompts.ts          # System prompt builders for both modes
-│   ├── seeds.ts            # 5 example workplace scenarios
-│   └── storage.ts          # localStorage helpers for session persistence
+│   ├── seeds.ts            # Example workplace scenarios
+│   └── storage.ts          # localStorage helpers (client-side fallback)
 └── types/index.ts          # All TypeScript interfaces
 ```
+
+## Tech Stack
+
+- **Next.js 15** (App Router) + **React 19** + **TypeScript 5**
+- **Tailwind CSS 4**
+- **Claude API** (`claude-opus-4-6`) via `@anthropic-ai/sdk`
+- **MongoDB** for persistent session storage
+- **Recharts** for dashboard visualizations
 
 ## Customization
 
@@ -51,18 +81,8 @@ src/
 
 ## Research Features
 
-- Sessions are auto-saved to `localStorage` after each analysis
+- Sessions are saved to MongoDB (with localStorage fallback when `MONGODB_URI` is not set)
 - Users can rate feedback (usefulness 1–5, relevance 1–5, would apply yes/no)
-- Session Log page shows all saved sessions with expandable detail
+- Dashboard shows aggregate trends and per-dimension breakdowns across all sessions
+- Session Log shows full history with expandable detail
 - Export all sessions as `commcoach-sessions.json` for offline analysis
-
-## Design Notes
-
-This is a **research prototype**, not a production system. Intentionally omitted:
-- Authentication / multi-user support
-- Database backend (uses browser localStorage)
-- Slack/Teams integrations
-- Analytics infrastructure
-- Production deployment setup
-
-The single `/api/analyze` endpoint serves both modes — the `mode` parameter determines which system prompt is built. All state lives in React `useState` + localStorage. No global state manager needed.
