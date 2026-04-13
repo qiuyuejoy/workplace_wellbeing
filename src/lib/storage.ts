@@ -1,74 +1,41 @@
-"use client";
-
 import type { Session, SessionRating } from "@/types";
 
-const STORAGE_KEY = "commcoach_sessions";
-
-function isClient(): boolean {
-  return typeof window !== "undefined";
+export async function getSessions(): Promise<Session[]> {
+  const res = await fetch("/api/sessions");
+  if (!res.ok) return [];
+  const data = await res.json() as { sessions: Session[] };
+  return data.sessions;
 }
 
-export function getSessions(): Session[] {
-  if (!isClient()) return [];
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (!raw) return [];
-    return JSON.parse(raw) as Session[];
-  } catch {
-    return [];
-  }
+export async function saveSession(
+  session: Omit<Session, "id" | "createdAt">
+): Promise<string> {
+  const res = await fetch("/api/sessions", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(session),
+  });
+  if (!res.ok) return "";
+  const data = await res.json() as { id: string };
+  return data.id;
 }
 
-export function saveSession(session: Omit<Session, "id" | "createdAt">): string {
-  if (!isClient()) return "";
-  const id = crypto.randomUUID();
-  const newSession: Session = {
-    ...session,
-    id,
-    createdAt: new Date().toISOString(),
-  };
-  try {
-    const existing = getSessions();
-    const updated = [newSession, ...existing];
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
-  } catch {
-    // localStorage quota exceeded or unavailable — fail silently
-  }
-  return id;
+export async function updateRating(
+  sessionId: string,
+  rating: SessionRating
+): Promise<void> {
+  await fetch(`/api/sessions/${sessionId}`, {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ rating }),
+  });
 }
 
-export function updateRating(sessionId: string, rating: SessionRating): void {
-  if (!isClient()) return;
-  try {
-    const sessions = getSessions();
-    const updated = sessions.map((s) =>
-      s.id === sessionId ? { ...s, rating } : s
-    );
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
-  } catch {
-    // fail silently
-  }
+export async function deleteSession(sessionId: string): Promise<void> {
+  await fetch(`/api/sessions/${sessionId}`, { method: "DELETE" });
 }
 
-export function deleteSession(sessionId: string): void {
-  if (!isClient()) return;
-  try {
-    const sessions = getSessions().filter((s) => s.id !== sessionId);
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(sessions));
-  } catch {
-    // fail silently
-  }
-}
-
-export function clearAll(): void {
-  if (!isClient()) return;
-  try {
-    localStorage.removeItem(STORAGE_KEY);
-  } catch {
-    // fail silently
-  }
-}
-
-export function exportJSON(): string {
-  return JSON.stringify(getSessions(), null, 2);
+export async function exportJSON(): Promise<string> {
+  const sessions = await getSessions();
+  return JSON.stringify(sessions, null, 2);
 }

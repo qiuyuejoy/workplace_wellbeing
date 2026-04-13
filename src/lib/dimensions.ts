@@ -2,44 +2,52 @@ import type { Dimension, DimensionId } from "@/types";
 
 export const DIMENSIONS: Dimension[] = [
   {
-    id: "supportiveness",
-    label: "Supportiveness",
-    description: "Does the message acknowledge the recipient's situation and convey care?",
-    color: "green",
+    id: "clarity",
+    label: "Clarity",
+    description: "Is the message easy to understand with no ambiguity?",
+    color: "pink",
     promptInstruction:
-      "Look for whether the message acknowledges the recipient's situation, offers help, or conveys care without being patronizing.",
+      "Assess whether the message is clear and unambiguous. Flag vague language, unclear references, or anything that could be misread.",
   },
   {
-    id: "precision",
-    label: "Precision / Specificity",
-    description: "Are details, timelines, and references clear and unambiguous?",
+    id: "accuracy",
+    label: "Accuracy",
+    description: "Are facts, details, and references correct and specific?",
+    color: "pink",
+    promptInstruction:
+      "Check for vague quantifiers, unverified claims, undefined timelines, or missing specifics that affect accuracy.",
+  },
+  {
+    id: "conciseness",
+    label: "Conciseness",
+    description: "Is the message appropriately brief without losing meaning?",
     color: "blue",
     promptInstruction:
-      "Look for vague quantifiers, unclear timelines, undefined pronouns, or missing specifics. Flag only what makes the message ambiguous.",
+      "Identify unnecessary repetition, filler phrases, or over-explanation. Flag only what genuinely reduces impact.",
   },
   {
-    id: "clarity_of_expectations",
-    label: "Clarity of Expectations",
-    description: "Is it clear what is being asked, who owns it, and what success looks like?",
-    color: "purple",
+    id: "professionalism",
+    label: "Professionalism",
+    description: "Does the tone suit the context and relationship?",
+    color: "blue",
     promptInstruction:
-      "Identify whether any requests, deadlines, or action items are clear, who owns what, and what success looks like.",
+      "Evaluate whether the tone, word choice, and framing are appropriate for the audience and workplace context.",
   },
   {
-    id: "empathy",
-    label: "Empathy",
+    id: "compassion",
+    label: "Compassion",
     description: "Does the message consider the recipient's perspective or emotional state?",
-    color: "rose",
+    color: "orange",
     promptInstruction:
       "Consider whether the message acknowledges the recipient's perspective or emotional state. Note tone that may land poorly given the audience.",
   },
   {
-    id: "constructive_feedback",
-    label: "Constructive Feedback",
-    description: "Is criticism specific, behavior-focused, and paired with a path forward?",
-    color: "amber",
+    id: "supportiveness",
+    label: "Supportiveness",
+    description: "Does the message acknowledge the recipient's situation and convey care?",
+    color: "orange",
     promptInstruction:
-      "When the message contains feedback or criticism, assess whether it is specific, separates behavior from identity, and offers a path forward.",
+      "Look for whether the message acknowledges the recipient's situation, offers help, or conveys care without being patronizing.",
   },
 ];
 

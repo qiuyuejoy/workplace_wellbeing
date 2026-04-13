@@ -55,19 +55,21 @@ Return ONLY a single valid JSON object with exactly these keys — no prose, no 
     { "text": "...", "dimensions": ["supportiveness"] }
   ],
   "issues": [
-    { "text": "...", "dimensions": ["precision", "clarity_of_expectations"] }
+    { "text": "...", "dimensions": ["clarity", "accuracy"] }
   ],
   "suggestions": [
-    { "text": "...", "dimensions": ["empathy"] }
+    { "text": "...", "dimensions": ["compassion"] }
   ],
   "optional_rewrite": "Full rewrite demonstrating the suggestions, or null if the message is strong as-is.",
   "next_time_tips": ["...", "..."],
-  "confidence_notes": "A caveat about context-dependent feedback, or null."
+  "confidence_notes": "A caveat about context-dependent feedback, or null.",
+  "dimension_scores": { "clarity": 4, "accuracy": 3 }
 }
 
-Valid dimension ids: supportiveness, precision, clarity_of_expectations, empathy, constructive_feedback.
+Valid dimension ids: clarity, accuracy, conciseness, professionalism, compassion, supportiveness.
 Each item in strengths, issues, and suggestions must include a "dimensions" array using only ids from the selected set.
 If there are no issues, return an empty array for "issues". Do not manufacture problems.
+For dimension_scores: include only the dimensions that were selected for this session. Score each 1 (poor) to 5 (excellent).
 `;
 
 export function buildPreSendPrompt(req: AnalyzeRequest): string {

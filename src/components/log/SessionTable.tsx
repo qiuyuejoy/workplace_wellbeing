@@ -10,7 +10,7 @@ export default function SessionTable() {
   const [sessions, setSessions] = useState<Session[]>([]);
 
   useEffect(() => {
-    setSessions(getSessions());
+    getSessions().then(setSessions);
   }, []);
 
   function handleDelete(id: string) {

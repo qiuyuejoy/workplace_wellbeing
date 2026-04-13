@@ -3,8 +3,8 @@
 import { exportJSON } from "@/lib/storage";
 
 export default function ExportButton() {
-  function handleExport() {
-    const json = exportJSON();
+  async function handleExport() {
+    const json = await exportJSON();
     const blob = new Blob([json], { type: "application/json" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");

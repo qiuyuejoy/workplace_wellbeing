@@ -10,7 +10,7 @@ import type {
   MessageIntent,
   SeedScenario,
 } from "@/types";
-import { saveSession } from "@/lib/storage";
+import { saveSession, updateRating } from "@/lib/storage";
 import PageHeader from "@/components/layout/PageHeader";
 import ContextPanel from "@/components/controls/ContextPanel";
 import MessageInput from "@/components/input/MessageInput";
@@ -22,7 +22,7 @@ export default function PreSendPage() {
   // Input state
   const [message, setMessage] = useState("");
   const [images, setImages] = useState<File[]>([]);
-  const [dimensions, setDimensions] = useState<DimensionId[]>(["clarity_of_expectations", "precision"]);
+  const [dimensions, setDimensions] = useState<DimensionId[]>(["clarity", "accuracy"]);
   const [audience, setAudience] = useState<AudienceType>("peer");
   const [customAudience, setCustomAudience] = useState("");
   const [intent, setIntent] = useState<MessageIntent>("request");
@@ -96,7 +96,7 @@ export default function PreSendPage() {
 
       setResult(data.result);
 
-      const id = saveSession({
+      const id = await saveSession({
         mode: "pre-send",
         message,
         dimensions,
@@ -186,9 +186,7 @@ export default function PreSendPage() {
           {sessionId && (
             <SelfRatingForm
               onSubmit={(rating) => {
-                import("@/lib/storage").then(({ updateRating }) => {
-                  updateRating(sessionId, rating);
-                });
+                updateRating(sessionId, rating);
               }}
             />
           )}
