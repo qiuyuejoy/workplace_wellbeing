@@ -5,7 +5,7 @@ export const DIMENSIONS: Dimension[] = [
     id: "clarity",
     label: "Clarity",
     description: "Is the message easy to understand with no ambiguity?",
-    color: "pink",
+    color: "rose",
     promptInstruction:
       "Assess whether the message is clear and unambiguous. Flag vague language, unclear references, or anything that could be misread.",
   },
@@ -13,7 +13,7 @@ export const DIMENSIONS: Dimension[] = [
     id: "accuracy",
     label: "Accuracy",
     description: "Are facts, details, and references correct and specific?",
-    color: "pink",
+    color: "rose",
     promptInstruction:
       "Check for vague quantifiers, unverified claims, undefined timelines, or missing specifics that affect accuracy.",
   },
@@ -37,7 +37,7 @@ export const DIMENSIONS: Dimension[] = [
     id: "compassion",
     label: "Compassion",
     description: "Does the message consider the recipient's perspective or emotional state?",
-    color: "orange",
+    color: "amber",
     promptInstruction:
       "Consider whether the message acknowledges the recipient's perspective or emotional state. Note tone that may land poorly given the audience.",
   },
@@ -45,7 +45,7 @@ export const DIMENSIONS: Dimension[] = [
     id: "supportiveness",
     label: "Supportiveness",
     description: "Does the message acknowledge the recipient's situation and convey care?",
-    color: "orange",
+    color: "amber",
     promptInstruction:
       "Look for whether the message acknowledges the recipient's situation, offers help, or conveys care without being patronizing.",
   },
