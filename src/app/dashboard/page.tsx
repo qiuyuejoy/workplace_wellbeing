@@ -175,9 +175,9 @@ export default function DashboardPage() {
     return { total, thisWeek, topMode };
   }, [sessions]);
 
-  // sessions with dimension_scores (reflect mode only)
+  // sessions with dimension_scores (both modes return scores)
   const scoredSessions = useMemo(
-    () => sessions.filter((s) => s.mode === "reflect" && s.result.dimension_scores),
+    () => sessions.filter((s) => s.result.dimension_scores),
     [sessions]
   );
 
@@ -244,10 +244,10 @@ export default function DashboardPage() {
       <div>
         <h2 className="mb-3 text-sm font-semibold text-gray-800">Dimension Score Trends</h2>
 
-        {scoredSessions.length < 2 ? (
+        {scoredSessions.length === 0 ? (
           <div className="rounded-lg border border-dashed border-gray-300 bg-gray-50 px-6 py-10 text-center">
             <p className="text-sm text-gray-500">
-              Complete at least 2 Post-reflection sessions to start tracking your dimension scores.
+              Complete a session to start tracking your dimension scores.
             </p>
           </div>
         ) : (
