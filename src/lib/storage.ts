@@ -23,15 +23,24 @@ function lsSet(sessions: Session[]): void {
 // Each function tries the API first. If the request fails or returns an error
 // status, it falls back to localStorage transparently.
 
+/** Synchronous read from localStorage — use to populate UI immediately. */
+export function getLocalSessions(): Session[] {
+  return lsGet();
+}
+
 export async function getSessions(): Promise<Session[]> {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 3000);
   try {
-    const res = await fetch("/api/sessions");
+    const res = await fetch("/api/sessions", { signal: controller.signal });
+    clearTimeout(timer);
     if (res.ok) {
       const data = (await res.json()) as { sessions: Session[] };
       return data.sessions;
     }
   } catch {
-    // network error — fall through
+    clearTimeout(timer);
+    // network error or timeout — fall through
   }
   return lsGet();
 }

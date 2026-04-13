@@ -11,7 +11,7 @@ declare global {
   var _mongoDb: Db | undefined;
 }
 
-const OPTIONS = { serverSelectionTimeoutMS: 5000, family: 4 };
+const OPTIONS = { serverSelectionTimeoutMS: 2000, family: 4 };
 
 export async function getDb(): Promise<Db> {
   if (process.env.NODE_ENV === "development") {

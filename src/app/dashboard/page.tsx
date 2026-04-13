@@ -11,7 +11,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import PageHeader from "@/components/layout/PageHeader";
-import { getSessions } from "@/lib/storage";
+import { getLocalSessions, getSessions } from "@/lib/storage";
 import { DIMENSIONS } from "@/lib/dimensions";
 import type { Session, DimensionId } from "@/types";
 
@@ -150,6 +150,8 @@ export default function DashboardPage() {
   const [sessions, setSessions] = useState<Session[]>([]);
 
   useEffect(() => {
+    // Show localStorage data immediately, then update when API responds
+    setSessions(getLocalSessions());
     getSessions().then(setSessions);
   }, []);
 

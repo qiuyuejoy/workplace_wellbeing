@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import type { Session } from "@/types";
-import { getSessions, deleteSession } from "@/lib/storage";
+import { getLocalSessions, getSessions, deleteSession } from "@/lib/storage";
 import SessionRow from "./SessionRow";
 import ExportButton from "./ExportButton";
 
@@ -10,6 +10,8 @@ export default function SessionTable() {
   const [sessions, setSessions] = useState<Session[]>([]);
 
   useEffect(() => {
+    // Show localStorage data immediately, then update when API responds
+    setSessions(getLocalSessions());
     getSessions().then(setSessions);
   }, []);
 
