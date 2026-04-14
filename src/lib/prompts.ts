@@ -52,7 +52,7 @@ Return ONLY a single valid JSON object with exactly these keys — no prose, no 
 {
   "summary": "One to two sentence overall assessment.",
   "strengths": [
-    { "text": "...", "dimensions": ["supportiveness"] }
+    { "text": "...", "dimensions": ["sincerity"] }
   ],
   "issues": [
     { "text": "...", "dimensions": ["clarity", "accuracy"] }
@@ -63,13 +63,16 @@ Return ONLY a single valid JSON object with exactly these keys — no prose, no 
   "optional_rewrite": "Full rewrite demonstrating the suggestions, or null if the message is strong as-is.",
   "next_time_tips": ["...", "..."],
   "confidence_notes": "A caveat about context-dependent feedback, or null.",
-  "dimension_scores": { "clarity": 4, "accuracy": 3 }
+  "dimension_scores": {
+    "clarity": { "score": 4, "reason": "One sentence explaining the score." },
+    "responsibility": { "score": 5, "reason": "One sentence explaining the score." }
+  }
 }
 
-Valid dimension ids: clarity, accuracy, conciseness, professionalism, compassion, supportiveness.
+Valid dimension ids: clarity, accuracy, professionalism, sincerity, responsibility, compassion.
 Each item in strengths, issues, and suggestions must include a "dimensions" array using only ids from the selected set.
 If there are no issues, return an empty array for "issues". Do not manufacture problems.
-For dimension_scores: include only the dimensions that were selected for this session. Score each 1 (poor) to 5 (excellent).
+For dimension_scores: include only the dimensions that were selected for this session. Score each 1 (poor) to 5 (excellent). Each entry must be an object with "score" (integer) and "reason" (one sentence grounded in observable language evidence).
 `;
 
 export function buildPreSendPrompt(req: AnalyzeRequest): string {

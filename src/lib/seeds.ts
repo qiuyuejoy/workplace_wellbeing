@@ -17,7 +17,7 @@ export const SEED_SCENARIOS: SeedScenario[] = [
     mode: "pre-send",
     message:
       "I wanted to share some feedback about the presentation you gave yesterday. I thought the data section was really strong and showed a lot of preparation. One area to work on is the structure — the flow between sections felt a bit disjointed, which made it harder to follow the narrative. For next time, try mapping out the key takeaways first and building each section toward them. Happy to work through it together before your next one.",
-    dimensions: ["supportiveness", "compassion", "professionalism"],
+    dimensions: ["sincerity", "compassion", "professionalism"],
     audience: "direct_report",
     intent: "feedback",
   },
@@ -31,24 +31,59 @@ export const SEED_SCENARIOS: SeedScenario[] = [
     audience: "cross_functional",
     intent: "clarification",
   },
-  {
-    id: "frustrated-coworker",
-    label: "Respond to frustrated colleague",
-    mode: "reflect",
-    message:
-      "Alex: I've been waiting two weeks for that data export and nothing. Every time I ask I get 'it's being processed.' This is blocking my whole quarter.\n\nMe: I hear you, that's frustrating. The data team has been slammed but I'll escalate this today and get you a concrete date by EOD.",
-    dimensions: ["compassion", "supportiveness", "clarity"],
-    audience: "peer",
-    intent: "conflict_repair",
-  },
+
   {
     id: "check-in",
     label: "Supportive check-in",
     mode: "pre-send",
     message:
       "Hi Jamie, just wanted to check in. I know the past few weeks have been a lot with the reorg and the new project hitting at the same time. How are you doing with the workload? If anything needs to shift or you need support, I want to make sure we figure that out together. No pressure to have it all sorted — just wanted to open the door.",
-    dimensions: ["supportiveness", "compassion"],
+    dimensions: ["sincerity", "compassion"],
     audience: "direct_report",
     intent: "check_in",
   },
+  {
+    id: "frustrated-coworker",
+    label: "Respond to frustrated colleague",
+    mode: "reflect",
+    message:
+      "Alex: I've been waiting two weeks for that data export and nothing. Every time I ask I get 'it's being processed.' This is blocking my whole quarter.\n\nMe: I hear you, that's frustrating. The data team has been slammed but I'll escalate this today and get you a concrete date by EOD.",
+    dimensions: ["compassion", "responsibility", "clarity"],
+    audience: "peer",
+    intent: "conflict_repair",
+  },
+  {
+  id: "unclear-request",
+  label: "Clarify a vague request",
+  mode: "reflect",
+  message:
+    "Jordan: Can you take a look at the report and make it better before we send it out?\n\nMe: Sure, I'll take a look and update it.",
+  dimensions: ["clarity", "responsibility"],
+  audience: "peer",
+  intent: "clarification",
+},
+
+{
+  id: "giving-critical-feedback",
+  label: "Give constructive critical feedback",
+  mode: "reflect",
+  message:
+    "Taylor: What did you think of my presentation?\n\nMe: I think it was fine overall, but honestly it felt a bit disorganized and hard to follow in some parts.",
+  dimensions: ["professionalism", "sincerity", "compassion"],
+  audience: "peer",
+  intent: "feedback",
+},
+{
+  id: "upward-risk-update",
+  label: "Communicate risk to manager",
+  mode: "reflect",
+  message:
+    "Manager: Are we still on track for the Friday launch?\n\nMe: It's a bit tight. There are some issues with the API integration, but we're working on it.",
+  dimensions: ["professionalism", "responsibility", "accuracy"],
+  audience: "manager",
+  intent: "update",
+}
+
+
+
 ];

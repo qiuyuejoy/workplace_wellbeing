@@ -1,10 +1,10 @@
 export type DimensionId =
   | "clarity"
   | "accuracy"
-  | "conciseness"
   | "professionalism"
-  | "compassion"
-  | "supportiveness";
+  | "sincerity"
+  | "responsibility"
+  | "compassion";
 
 export interface Dimension {
   id: DimensionId;
@@ -60,7 +60,7 @@ export interface FeedbackResult {
   optional_rewrite: string | null;
   next_time_tips: string[];
   confidence_notes: string | null;
-  dimension_scores?: Partial<Record<DimensionId, number>>;
+  dimension_scores?: Partial<Record<DimensionId, { score: number; reason: string }>>;
 }
 
 export interface SessionRating {

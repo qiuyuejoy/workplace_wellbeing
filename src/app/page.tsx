@@ -44,7 +44,7 @@ export default function HomePage() {
             <h2 className="text-sm font-semibold text-gray-900">Post-hoc Reflection</h2>
           </div>
           <p className="text-sm text-gray-500 leading-relaxed">
-            Paste a message or conversation you already sent. Get reflective feedback on what worked,
+            Paste a past conversation/meeting transcript. Get reflective feedback on what worked,
             what you might refine, and what to try next time.
           </p>
           <p className="mt-3 text-xs font-medium text-gray-400 group-hover:text-gray-600 transition-colors">
@@ -78,16 +78,16 @@ export default function HomePage() {
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           {[
             {
-              title: "Augmentation, not automation",
-              desc: "CommCue helps you think, not think for you. You always make the final call.",
+              title: "Personalized improvement",
+              desc: "Feedback is tailored to your improvement goals, while preserving the strengths and tone that make your communication your own.",
             },
             {
-              title: "Your voice, preserved",
-              desc: "Feedback is grounded in your goals and context, not generic writing rules.",
+              title: "Relationship- and context-aware support",
+              desc: "Adapt feedback to the people you reply with — their roles, preferences, and interaction patterns within your team.",
             },
             {
-              title: "Research prototype",
-              desc: "Sessions are saved locally and can be exported for study via the Session Log.",
+              title: "Supporting long-term skill development",
+              desc: "Reflect on a past conversation or meeting to uncover strengths, missed opportunities, and actionable strategies—so you can build better communication habits over time.",
             },
           ].map((item) => (
             <div key={item.title}>

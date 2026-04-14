@@ -189,8 +189,9 @@ export default function DashboardPage() {
       // collect dots
       const dots: ChartPoint[] = [];
       for (const s of scoredSessions) {
-        const score = s.result.dimension_scores?.[dim.id];
-        if (score == null) continue;
+        const entry = s.result.dimension_scores?.[dim.id];
+        if (entry == null) continue;
+        const score = typeof entry === "object" ? entry.score : entry;
         const ts = new Date(s.createdAt).getTime();
         dots.push({
           x: ts,

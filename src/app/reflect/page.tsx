@@ -21,7 +21,7 @@ import SelfRatingForm from "@/components/rating/SelfRatingForm";
 export default function ReflectPage() {
   const [message, setMessage] = useState("");
   const [images, setImages] = useState<File[]>([]);
-  const [dimensions, setDimensions] = useState<DimensionId[]>(["compassion", "supportiveness"]);
+  const [dimensions, setDimensions] = useState<DimensionId[]>(["compassion", "sincerity"]);
   const [audience, setAudience] = useState<AudienceType>("peer");
   const [customAudience, setCustomAudience] = useState("");
   const [intent, setIntent] = useState<MessageIntent>("check_in");
