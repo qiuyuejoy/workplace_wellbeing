@@ -26,7 +26,7 @@ Without `MONGODB_URI`, sessions fall back to browser `localStorage` only.
 
 - **Pre-send review** — paste a draft message and get structured feedback before sending
 - **Reflect** — analyze a sent message or conversation after the fact
-- **Dashboard** — analytics across all sessions (scores, trends, dimension breakdown)
+- **Skill Trends** — analytics across all sessions (scores, trends, dimension breakdown)
 - **Session log** — full history with expandable detail, user ratings, and JSON export
 - Configurable feedback style (concise / balanced / detailed) and intervention mode (gentle / direct)
 - 6 communication dimensions scored per analysis
@@ -40,7 +40,7 @@ src/
 │   ├── pre-send/page.tsx   # Pre-send review mode
 │   ├── reflect/page.tsx    # Post-hoc reflection mode
 │   ├── log/page.tsx        # Session log + export
-│   ├── dashboard/page.tsx  # Analytics dashboard
+│   ├── Skill Trends/page.tsx  # Analytics Skill Trends
 │   └── api/
 │       ├── analyze/        # POST — calls Claude API, saves session
 │       └── sessions/       # GET / POST / PATCH session records
@@ -67,7 +67,7 @@ src/
 - **Tailwind CSS 4**
 - **Claude API** (`claude-opus-4-6`) via `@anthropic-ai/sdk`
 - **MongoDB** for persistent session storage
-- **Recharts** for dashboard visualizations
+- **Recharts** for Skill Trends visualizations
 
 ## Customization
 
@@ -83,6 +83,6 @@ src/
 
 - Sessions are saved to MongoDB (with localStorage fallback when `MONGODB_URI` is not set)
 - Users can rate feedback (usefulness 1–5, relevance 1–5, would apply yes/no)
-- Dashboard shows aggregate trends and per-dimension breakdowns across all sessions
+- Skill Trends shows aggregate trends and per-dimension breakdowns across all sessions
 - Session Log shows full history with expandable detail
 - Export all sessions as `CommCue-sessions.json` for offline analysis

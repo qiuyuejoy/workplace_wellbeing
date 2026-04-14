@@ -1,23 +1,23 @@
-# CommCue — PlanV5: MongoDB Storage + Progress Dashboard
+# CommCue — PlanV5: MongoDB Storage + Progress Skill Trends
 
-This document defines the V5 upgrade to CommCue. It builds on V4 (6 dimensions, 3 modes, localStorage) and replaces browser storage with MongoDB and adds a `/dashboard` page for tracking communication skill development over time.
+This document defines the V5 upgrade to CommCue. It builds on V4 (6 dimensions, 3 modes, localStorage) and replaces browser storage with MongoDB and adds a `/Skill Trends` page for tracking communication skill development over time.
 
 ---
 
 ## Motivation
 
-Session data currently lives in `localStorage` — it is lost on browser clears and inaccessible across devices. The user wants to track improvement in communication quality over time using dimension scores (1–5) returned by post-reflection mode. A dashboard showing score trends per dimension, with individual data points and weekly averages, makes that progress visible.
+Session data currently lives in `localStorage` — it is lost on browser clears and inaccessible across devices. The user wants to track improvement in communication quality over time using dimension scores (1–5) returned by post-reflection mode. A Skill Trends showing score trends per dimension, with individual data points and weekly averages, makes that progress visible.
 
 ---
 
 ## What Changes in V5
 
-| Area                | V4                              | V5                                       |
-| ------------------- | ------------------------------- | ---------------------------------------- |
-| Storage             | `localStorage` via `storage.ts` | MongoDB via API routes                   |
-| Session persistence | Browser-only                    | Server-side, durable                     |
-| Dashboard           | Session log (table only)        | `/dashboard` with dimension score charts |
-| Dependencies        | None added                      | `mongodb`, `recharts`                    |
+| Area                | V4                              | V5                                          |
+| ------------------- | ------------------------------- | ------------------------------------------- |
+| Storage             | `localStorage` via `storage.ts` | MongoDB via API routes                      |
+| Session persistence | Browser-only                    | Server-side, durable                        |
+| Skill Trends        | Session log (table only)        | `/Skill Trends` with dimension score charts |
+| Dependencies        | None added                      | `mongodb`, `recharts`                       |
 
 ---
 
@@ -79,11 +79,11 @@ All functions become `async`. Callers (page components) are updated to `await` t
 
 ---
 
-## Dashboard (`/dashboard`)
+## Skill Trends (`/Skill Trends`)
 
 ### Route
 
-New page at `src/app/dashboard/page.tsx`. Added to navigation after "Session Log".
+New page at `src/app/Skill Trends/page.tsx`. Added to navigation after "Session Log".
 
 ### Layout
 
@@ -146,10 +146,10 @@ Pages that call `saveSession` and `updateRating` need minor updates since these 
 
 ## Navigation
 
-Add "Dashboard" link to `src/components/layout/Nav.tsx`:
+Add "Skill Trends" link to `src/components/layout/Nav.tsx`:
 
 ```typescript
-{ href: "/dashboard", label: "Dashboard" }
+{ href: "/Skill Trends", label: "Skill Trends" }
 ```
 
 Position: after "Session Log".
@@ -172,7 +172,7 @@ npm install mongodb recharts
 2. Submit a pre-send analysis → session appears in `/log` (fetched from MongoDB, not localStorage)
 3. Submit a post-reflection analysis → session appears with dimension scores
 4. Rate a session → rating persists after page refresh (proves DB write)
-5. `/dashboard` loads with summary row and 6 charts
+5. `/Skill Trends` loads with summary row and 6 charts
 6. After 2+ reflect sessions → charts show dots and trend line
 7. Fewer than 2 scored sessions → empty state message shown
 8. `npm run build` passes with no TypeScript errors

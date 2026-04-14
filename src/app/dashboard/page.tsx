@@ -146,7 +146,7 @@ function DimensionChart({
 
 // ── main page ──────────────────────────────────────────────────────────────
 
-export default function DashboardPage() {
+export default function Skill TrendsPage() {
   const [sessions, setSessions] = useState<Session[]>([]);
 
   useEffect(() => {
@@ -230,7 +230,7 @@ export default function DashboardPage() {
   return (
     <div className="space-y-6">
       <PageHeader
-        title="Dashboard"
+        title="Skill Trends"
         subtitle="Track your communication skill development over time."
       />
 

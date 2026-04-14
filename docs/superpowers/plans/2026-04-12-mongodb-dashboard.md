@@ -1,10 +1,10 @@
-# MongoDB Storage + Progress Dashboard Implementation Plan
+# MongoDB Storage + Progress Skill Trends Implementation Plan
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Replace localStorage with MongoDB and add a `/dashboard` page showing dimension score trends over time.
+**Goal:** Replace localStorage with MongoDB and add a `/Skill Trends` page showing dimension score trends over time.
 
-**Architecture:** Sessions are stored in a MongoDB `sessions` collection via four Next.js API routes. The existing `storage.ts` is rewritten to call these routes (same function signatures, now async). A new `/dashboard` page fetches all sessions and renders 6 Recharts ComposedCharts — one per dimension — showing raw score dots and a weekly average trend line.
+**Architecture:** Sessions are stored in a MongoDB `sessions` collection via four Next.js API routes. The existing `storage.ts` is rewritten to call these routes (same function signatures, now async). A new `/Skill Trends` page fetches all sessions and renders 6 Recharts ComposedCharts — one per dimension — showing raw score dots and a weekly average trend line.
 
 **Tech Stack:** Next.js 16 App Router, TypeScript, MongoDB Node.js driver, Recharts
 
@@ -22,8 +22,8 @@
 | `src/app/reflect/page.tsx`           | Modify  | Await async saveSession/updateRating  |
 | `src/app/real-time/page.tsx`         | Modify  | Await async saveSession (if added)    |
 | `src/app/log/page.tsx`               | Modify  | Fetch sessions from API via useEffect |
-| `src/app/dashboard/page.tsx`         | Create  | Progress dashboard with 6 charts      |
-| `src/components/layout/Nav.tsx`      | Modify  | Add Dashboard nav link                |
+| `src/app/Skill Trends/page.tsx`      | Create  | Progress Skill Trends with 6 charts   |
+| `src/components/layout/Nav.tsx`      | Modify  | Add Skill Trends nav link             |
 | `.env.local`                         | Modify  | Add MONGODB_URI                       |
 | `package.json`                       | Modify  | Add mongodb + recharts deps           |
 
@@ -447,16 +447,16 @@ git commit -m "feat: update pages to use async MongoDB-backed storage"
 
 ---
 
-## Task 6: Dashboard page
+## Task 6: Skill Trends page
 
 **Files:**
 
-- Create: `src/app/dashboard/page.tsx`
+- Create: `src/app/Skill Trends/page.tsx`
 
-- [ ] **Step 1: Create the dashboard page**
+- [ ] **Step 1: Create the Skill Trends page**
 
 ```typescript
-// src/app/dashboard/page.tsx
+// src/app/Skill Trends/page.tsx
 "use client";
 
 import { useEffect, useState } from "react";
@@ -589,7 +589,7 @@ function DimChart({ sessions, dimId, label, color }: DimChartProps) {
   );
 }
 
-export default function DashboardPage() {
+export default function Skill TrendsPage() {
   const [sessions, setSessions] = useState<Session[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -620,7 +620,7 @@ export default function DashboardPage() {
   return (
     <div className="space-y-6">
       <PageHeader
-        title="Progress Dashboard"
+        title="Progress Skill Trends"
         subtitle="Track how your communication quality improves over time across all six dimensions."
       />
 
@@ -669,7 +669,7 @@ export default function DashboardPage() {
 - [ ] **Step 2: Verify TypeScript**
 
 ```bash
-npx tsc --noEmit 2>&1 | grep "dashboard" | head -10
+npx tsc --noEmit 2>&1 | grep "Skill Trends" | head -10
 ```
 
 Expected: no errors for this file.
@@ -677,19 +677,19 @@ Expected: no errors for this file.
 - [ ] **Step 3: Commit**
 
 ```bash
-git add src/app/dashboard/page.tsx
-git commit -m "feat: add progress dashboard with dimension score charts"
+git add src/app/Skill Trends/page.tsx
+git commit -m "feat: add progress Skill Trends with dimension score charts"
 ```
 
 ---
 
-## Task 7: Add Dashboard to navigation
+## Task 7: Add Skill Trends to navigation
 
 **Files:**
 
 - Modify: `src/components/layout/Nav.tsx`
 
-- [ ] **Step 1: Add Dashboard link**
+- [ ] **Step 1: Add Skill Trends link**
 
 In `src/components/layout/Nav.tsx`, update `NAV_LINKS`:
 
@@ -700,7 +700,7 @@ const NAV_LINKS = [
   { href: '/real-time', label: 'Real-time' },
   { href: '/reflect', label: 'Reflect' },
   { href: '/log', label: 'Session Log' },
-  { href: '/dashboard', label: 'Dashboard' },
+  { href: '/Skill Trends', label: 'Skill Trends' },
 ];
 ```
 
@@ -710,13 +710,13 @@ const NAV_LINKS = [
 npm run build 2>&1 | tail -15
 ```
 
-Expected: all 7 routes present: `/`, `/pre-send`, `/real-time`, `/reflect`, `/log`, `/dashboard`, `/api/analyze`, `/api/sessions`, `/api/sessions/[id]`. Zero TypeScript errors.
+Expected: all 7 routes present: `/`, `/pre-send`, `/real-time`, `/reflect`, `/log`, `/Skill Trends`, `/api/analyze`, `/api/sessions`, `/api/sessions/[id]`. Zero TypeScript errors.
 
 - [ ] **Step 3: Final commit**
 
 ```bash
 git add src/components/layout/Nav.tsx
-git commit -m "feat: add Dashboard link to navigation"
+git commit -m "feat: add Skill Trends link to navigation"
 ```
 
 ---
@@ -727,7 +727,7 @@ git commit -m "feat: add Dashboard link to navigation"
 2. Submit a pre-send analysis → session appears in `/log` after refresh (from MongoDB)
 3. Submit a post-reflection analysis → session has dimension scores (1–5)
 4. Rate a session → rating persists after page refresh
-5. `/dashboard` loads with summary row (total sessions, this week, top mode)
+5. `/Skill Trends` loads with summary row (total sessions, this week, top mode)
 6. After 2+ reflect sessions → all 6 dimension charts show dots + trend line
 7. Fewer than 2 scored sessions → empty state message shown
 8. Export from `/log` → downloads valid JSON from MongoDB data

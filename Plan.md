@@ -251,7 +251,7 @@ Requirements:
 - copy buttons for generated feedback / rewrites
 - collapsible sections where helpful
 
-Please make the UI feel credible for an HCI research prototype, not like a generic SaaS dashboard.
+Please make the UI feel credible for an HCI research prototype, not like a generic SaaS Skill Trends.
 
 ---
 
