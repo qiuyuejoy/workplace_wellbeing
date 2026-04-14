@@ -7,7 +7,7 @@ const NAV_LINKS = [
   { href: "/", label: "Home" },
   { href: "/dashboard", label: "Dashboard" },
   { href: "/pre-send", label: "Pre-send Review" },
-  { href: "/reflect", label: "Reflect" },
+  { href: "/reflect", label: "Post-hoc Reflection" },
   { href: "/log", label: "Session Log" },
 ];
 
