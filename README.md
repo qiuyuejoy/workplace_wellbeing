@@ -1,6 +1,6 @@
-# CommCoach
+# CommCue
 
-A human-centered AI communication coach for workplace messaging. Research prototype built with Next.js + Claude API + MongoDB.
+A human-centered AI Communication Cue for workplace messaging. Research prototype built with Next.js + Claude API + MongoDB.
 
 ## Setup
 
@@ -15,10 +15,10 @@ Open [http://localhost:3000](http://localhost:3000).
 
 ## Environment Variables
 
-| Variable | Required | Description |
-|---|---|---|
-| `ANTHROPIC_API_KEY` | Yes | Claude API key for message analysis |
-| `MONGODB_URI` | No | MongoDB connection string for persistent session storage |
+| Variable            | Required | Description                                              |
+| ------------------- | -------- | -------------------------------------------------------- |
+| `ANTHROPIC_API_KEY` | Yes      | Claude API key for message analysis                      |
+| `MONGODB_URI`       | No       | MongoDB connection string for persistent session storage |
 
 Without `MONGODB_URI`, sessions fall back to browser `localStorage` only.
 
@@ -85,4 +85,4 @@ src/
 - Users can rate feedback (usefulness 1–5, relevance 1–5, would apply yes/no)
 - Dashboard shows aggregate trends and per-dimension breakdowns across all sessions
 - Session Log shows full history with expandable detail
-- Export all sessions as `commcoach-sessions.json` for offline analysis
+- Export all sessions as `CommCue-sessions.json` for offline analysis

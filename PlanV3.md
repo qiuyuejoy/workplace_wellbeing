@@ -1,17 +1,17 @@
-# CommCoach — PlanV3: Research Framing and Mode Redesign
+# CommCue — PlanV3: Research Framing and Mode Redesign
 
-This document defines the V3 upgrade to CommCoach. It supersedes the original `Plan.md` spec and builds on what was delivered in `PlanV2.md`.
+This document defines the V3 upgrade to CommCue. It supersedes the original `Plan.md` spec and builds on what was delivered in `PlanV2.md`.
 
 ---
 
 ## What Changes in V3
 
-| Area | V2 | V3 |
-|---|---|---|
+| Area                     | V2                                                                                     | V3                                                                              |
+| ------------------------ | -------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
 | Communication Dimensions | 5 (Supportiveness, Precision, Clarity of Expectations, Empathy, Constructive Feedback) | 6 (Clarity, Accuracy, Conciseness, Professionalism, Compassion, Supportiveness) |
-| Modes | 2 (Pre-send, Post-hoc Reflection) | 3 (Pre-send, Real-time Support, Post-reflection) |
-| Post-reflection output | Qualitative feedback only | Adds dimension scores 1–5 |
-| Real-time Support | Not present | New lightweight mode for live conversations |
+| Modes                    | 2 (Pre-send, Post-hoc Reflection)                                                      | 3 (Pre-send, Real-time Support, Post-reflection)                                |
+| Post-reflection output   | Qualitative feedback only                                                              | Adds dimension scores 1–5                                                       |
+| Real-time Support        | Not present                                                                            | New lightweight mode for live conversations                                     |
 
 ---
 
@@ -22,6 +22,7 @@ This prototype is intended for workplace communication and collaboration support
 ### Communication Dimensions
 
 **[1] Clarity**
+
 - Ensure the message is easy to understand and unambiguous
 - Check:
   - Are there vague references (e.g., "this", "that")?
@@ -33,6 +34,7 @@ This prototype is intended for workplace communication and collaboration support
   - Structuring content into clear units
 
 **[2] Accuracy**
+
 - Ensure information is correct and reliable
 - Check:
   - Any speculation or unsupported claims?
@@ -43,6 +45,7 @@ This prototype is intended for workplace communication and collaboration support
   - Avoiding exaggeration
 
 **[3] Conciseness**
+
 - Ensure efficient expression without redundancy
 - Check:
   - Are there repeated ideas?
@@ -53,6 +56,7 @@ This prototype is intended for workplace communication and collaboration support
   - Keeping only essential information
 
 **[4] Professionalism**
+
 - Ensure workplace-appropriate tone
 - Check:
   - Is the tone respectful and neutral?
@@ -63,6 +67,7 @@ This prototype is intended for workplace communication and collaboration support
   - Maintaining professional tone
 
 **[5] Compassion**
+
 - Ensure emotional awareness and empathy
 - Check:
   - Does the message acknowledge the recipient's situation?
@@ -73,6 +78,7 @@ This prototype is intended for workplace communication and collaboration support
   - Using phrases like "I understand…" or "I appreciate…"
 
 **[6] Supportiveness**
+
 - Ensure encouragement and psychological safety
 - Check:
   - Is the message overly critical or blaming?
@@ -89,9 +95,11 @@ This prototype is intended for workplace communication and collaboration support
 ## Mode-Specific Behavior
 
 ### [Pre-send Mode]
+
 **Goal:** Optimize a written reply before sending
 
 **User Flow:**
+
 1. System provides an input field containing the original message (the message the user is replying to)
 2. User drafts a reply
 3. System analyzes the drafted reply across all communication quality dimensions:
@@ -104,11 +112,13 @@ This prototype is intended for workplace communication and collaboration support
 4. System generates improvement suggestions and a revised version
 
 **System Behavior:**
+
 - Identify specific issues (not generic feedback)
 - Prioritize high-impact improvements
 - Preserve user intent and voice
 
 **Output Format:**
+
 1. Revised Message (clean, ready to send)
 2. Inline Suggestions (highlighted edits with explanations)
    - e.g., [Clarity] Replace "this" → "the onboarding document"
@@ -118,15 +128,18 @@ This prototype is intended for workplace communication and collaboration support
 ---
 
 ### [Real-time Support Mode]
+
 **Goal:** Provide lightweight, non-intrusive, real-time support during live conversation (e.g., Zoom meeting)
 
 **User Flow:**
+
 1. User activates real-time support (e.g., clicks "Assist" button)
 2. System captures and transcribes ongoing conversation (speaker-aware if possible)
 3. System analyzes conversation context in real time
 4. System provides suggested response points
 
 **System Behavior:**
+
 - Focus ONLY on high-impact, time-sensitive guidance
 - Do NOT generate full sentences unless explicitly needed
 - Prioritize:
@@ -135,6 +148,7 @@ This prototype is intended for workplace communication and collaboration support
   - Supportiveness (how to maintain collaboration)
 
 **Output Format:**
+
 1. Suggested Talking Points (short bullet points)
    - e.g., "Acknowledge their concern about timeline"
    - e.g., "Clarify deliverables for next week"
@@ -146,19 +160,23 @@ This prototype is intended for workplace communication and collaboration support
 ---
 
 ### [Post-reflection Mode]
+
 **Goal:** Support learning and long-term improvement after communication
 
 **User Flow:**
+
 1. User inputs a past message or conversation transcript
 2. System evaluates communication quality across all dimensions
 3. System provides structured feedback and learning insights
 
 **System Behavior:**
+
 - Balance critique with positive reinforcement
 - Focus on patterns, not just one-off corrections
 - Provide actionable, reusable advice
 
 **Output Format:**
+
 1. Dimension Scores (1–5):
    - Clarity
    - Accuracy
@@ -191,14 +209,14 @@ This prototype is intended for workplace communication and collaboration support
 
 Replace the 5 existing dimensions with these 6:
 
-| ID | Label | Color |
-|---|---|---|
-| `clarity` | Clarity | blue |
-| `accuracy` | Accuracy | indigo |
-| `conciseness` | Conciseness | cyan |
-| `professionalism` | Professionalism | slate |
-| `compassion` | Compassion | rose |
-| `supportiveness` | Supportiveness | green |
+| ID                | Label           | Color  |
+| ----------------- | --------------- | ------ |
+| `clarity`         | Clarity         | blue   |
+| `accuracy`        | Accuracy        | indigo |
+| `conciseness`     | Conciseness     | cyan   |
+| `professionalism` | Professionalism | slate  |
+| `compassion`      | Compassion      | rose   |
+| `supportiveness`  | Supportiveness  | green  |
 
 ### 2. Update Types (`src/types/index.ts`)
 

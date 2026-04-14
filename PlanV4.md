@@ -1,6 +1,6 @@
-# CommCoach — PlanV4: MongoDB Storage + Progress Dashboard
+# CommCue — PlanV4: MongoDB Storage + Progress Dashboard
 
-This document defines the V4 upgrade to CommCoach. It builds on V3 (6 dimensions, 3 modes) and adds persistent storage via MongoDB and a visualization dashboard for tracking communication skill development over time.
+This document defines the V4 upgrade to CommCue. It builds on V3 (6 dimensions, 3 modes) and adds persistent storage via MongoDB and a visualization dashboard for tracking communication skill development over time.
 
 ---
 
@@ -12,12 +12,12 @@ Session data currently lives in `localStorage` — it is lost on browser clears 
 
 ## What Changes in V4
 
-| Area | V3 | V4 |
-|---|---|---|
-| Storage | `localStorage` via `storage.ts` | MongoDB via API routes |
-| Session persistence | Browser-only | Server-side, durable |
-| Dashboard | Session log (table only) | `/dashboard` with dimension score charts |
-| Dependencies | None added | `mongodb`, `recharts` |
+| Area                | V3                              | V4                                       |
+| ------------------- | ------------------------------- | ---------------------------------------- |
+| Storage             | `localStorage` via `storage.ts` | MongoDB via API routes                   |
+| Session persistence | Browser-only                    | Server-side, durable                     |
+| Dashboard           | Session log (table only)        | `/dashboard` with dimension score charts |
+| Dependencies        | None added                      | `mongodb`, `recharts`                    |
 
 ---
 
@@ -33,8 +33,9 @@ A singleton client that reuses the connection across hot reloads in development.
 ```
 
 Add to `.env.local`:
+
 ```
-MONGODB_URI=mongodb+srv://<user>:<pass>@<cluster>.mongodb.net/commcoach
+MONGODB_URI=mongodb+srv://<user>:<pass>@<cluster>.mongodb.net/CommCue
 ```
 
 ### Collection: `sessions`
@@ -44,18 +45,22 @@ Documents use the existing `Session` type from `src/types/index.ts` — no schem
 ### API Routes
 
 **`POST /api/sessions`** — Save a new session after analysis completes.
+
 - Body: `Omit<Session, "id" | "createdAt">`
 - Generates `id` (UUID) and `createdAt` (ISO timestamp) server-side
 - Returns `{ id }`
 
 **`GET /api/sessions`** — Fetch all sessions, sorted by `createdAt` descending.
+
 - Returns `{ sessions: Session[] }`
 
 **`PATCH /api/sessions/[id]`** — Save self-rating after user rates a session.
+
 - Body: `{ rating: SessionRating }`
 - Returns `{ ok: true }`
 
 **`DELETE /api/sessions/[id]`** — Delete a session from the log.
+
 - Returns `{ ok: true }`
 
 ### Replace `src/lib/storage.ts`
@@ -104,6 +109,7 @@ Only sessions where `result.dimension_scores` is present are used for score char
 ### Charts (Recharts `ComposedChart`)
 
 Each of the 6 dimension charts uses:
+
 - `ScatterChart` dots — one per reflect session, X = `createdAt` date, Y = score (1–5)
 - `Line` overlay — weekly average of scores (grouped by ISO week)
 - Y-axis fixed 1–5
@@ -114,15 +120,16 @@ Each of the 6 dimension charts uses:
 ### Empty State
 
 If fewer than 2 scored sessions exist, show a friendly message:
+
 > "Complete a Post-reflection session to start tracking your progress."
 
 ### Summary Row
 
-| Stat | Source |
-|---|---|
-| Total sessions | All sessions in DB |
-| This week | Sessions with `createdAt` in current ISO week |
-| Most-used mode | Mode with highest session count |
+| Stat           | Source                                        |
+| -------------- | --------------------------------------------- |
+| Total sessions | All sessions in DB                            |
+| This week      | Sessions with `createdAt` in current ISO week |
+| Most-used mode | Mode with highest session count               |
 
 ---
 

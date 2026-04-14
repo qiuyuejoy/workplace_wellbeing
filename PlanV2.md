@@ -1,4 +1,4 @@
-# CommCoach — PlanV2: What Was Built
+# CommCue — PlanV2: What Was Built
 
 This document summarizes the implementation decisions and updates made relative to the original `Plan.md` spec.
 
@@ -6,12 +6,12 @@ This document summarizes the implementation decisions and updates made relative 
 
 ## Stack Changes vs. Original Spec
 
-| Area | Plan.md | Implemented |
-|---|---|---|
-| LLM | OpenAI API | **Claude API** (`claude-opus-4-6`, Anthropic SDK) |
-| Framework | Next.js + TypeScript | Next.js 16.2.3 (App Router) + TypeScript ✓ |
-| Styling | Tailwind CSS | Tailwind CSS v4 ✓ |
-| Storage | Local JSON or SQLite | `localStorage` (SSR-safe helpers) ✓ |
+| Area      | Plan.md              | Implemented                                       |
+| --------- | -------------------- | ------------------------------------------------- |
+| LLM       | OpenAI API           | **Claude API** (`claude-opus-4-6`, Anthropic SDK) |
+| Framework | Next.js + TypeScript | Next.js 16.2.3 (App Router) + TypeScript ✓        |
+| Styling   | Tailwind CSS         | Tailwind CSS v4 ✓                                 |
+| Storage   | Local JSON or SQLite | `localStorage` (SSR-safe helpers) ✓               |
 
 ---
 
@@ -20,6 +20,7 @@ This document summarizes the implementation decisions and updates made relative 
 ### Core App (Phases 1–4 complete)
 
 **4 pages, all functional:**
+
 - `/` — Home/Overview: explains the tool, two modes, and five communication dimensions
 - `/pre-send` — Pre-send Review: draft a message, configure context, get structured feedback
 - `/reflect` — Post-hoc Reflection: paste a sent message or conversation, get reflective coaching
@@ -81,7 +82,7 @@ Each `FeedbackPoint` carries a `dimensions` array so UI badges render without in
 - **Auto-save**: every successful analysis is saved to `localStorage` as a `Session` object
 - **Self-rating**: appears below each result — usefulness (1–5), relevance (1–5), would apply (yes/no)
 - **Session Log**: table view with expandable detail rows showing full feedback and rating
-- **JSON Export**: downloads `commcoach-sessions.json` for offline analysis
+- **JSON Export**: downloads `CommCue-sessions.json` for offline analysis
 - **Seed Scenarios**: 5 clickable example chips on each mode page to pre-populate input
 
 ---
@@ -100,6 +101,7 @@ Each `FeedbackPoint` carries a `dimensions` array so UI badges render without in
 Users can now upload screenshots (e.g., Slack, Teams, email) instead of typing or pasting text.
 
 **How it works:**
+
 - An "Upload screenshot" button appears in the message input header on both Pre-send and Reflect pages
 - Selected images are shown as thumbnail previews with individual remove buttons
 - On submit, images are converted to base64 data URLs in the browser
@@ -108,6 +110,7 @@ Users can now upload screenshots (e.g., Slack, Teams, email) instead of typing o
 - Text input remains optional — users can submit with image only, or combine image + typed context
 
 **Files changed:**
+
 - `src/types/index.ts` — added `images?: string[]` to `AnalyzeRequest`
 - `src/components/input/MessageInput.tsx` — added file input, thumbnails, remove buttons
 - `src/app/pre-send/page.tsx` — added `File[]` state, base64 conversion, updated validation

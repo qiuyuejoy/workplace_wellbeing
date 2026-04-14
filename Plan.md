@@ -1,10 +1,10 @@
 You are an expert full-stack prototyping engineer helping me build a research prototype for an interview and possible pilot study.
 
-I want you to build a lightweight, local-first prototype of a human-centered AI communication coach for workplace messaging. This is a research prototype, not a production system. Prioritize clarity, modularity, and feasibility over enterprise complexity.
+I want you to build a lightweight, local-first prototype of a human-centered AI Communication Cue for workplace messaging. This is a research prototype, not a production system. Prioritize clarity, modularity, and feasibility over enterprise complexity.
 
 ## Project Goal
 
-Build a prototype called “CommCoach” that helps users improve workplace communication in text-based messaging contexts.
+Build a prototype called “CommCue” that helps users improve workplace communication in text-based messaging contexts.
 
 The system should support two modes:
 
@@ -28,6 +28,7 @@ This should be framed as communication augmentation, not automation. The system 
 ## Research Framing
 
 This prototype is intended for workplace communication and collaboration support. It should emphasize:
+
 - supportiveness
 - precision / specificity
 - clarity of expectations
@@ -35,6 +36,7 @@ This prototype is intended for workplace communication and collaboration support
 - constructive feedback
 
 The design should support:
+
 - personalization
 - user autonomy
 - adaptive feedback
@@ -49,6 +51,7 @@ Users should be able to choose which communication dimensions they want help wit
 A user wants help drafting or reflecting on workplace communication with a colleague, manager, or direct report.
 
 Examples:
+
 - asking for a task update
 - giving feedback
 - clarifying expectations
@@ -63,6 +66,7 @@ Examples:
 This is a 3-month-style research prototype, so keep scope intentionally narrow and feasible.
 
 Do NOT build:
+
 - actual Slack/Teams OAuth integrations
 - production authentication
 - multi-tenant backend infrastructure
@@ -78,6 +82,7 @@ Instead, build a local prototype that simulates a communication assistant.
 ## Recommended Stack
 
 Use a simple and robust stack:
+
 - Frontend: Next.js + TypeScript + React
 - Styling: Tailwind CSS
 - UI: clean research-demo style, minimal but polished
@@ -153,6 +158,7 @@ Implement these 5 communication dimensions as selectable options:
 - Constructive Feedback
 
 Each should have:
+
 - a display name
 - a short description
 - a prompt instruction used for analysis
@@ -164,6 +170,7 @@ Each should have:
 Include the following user controls:
 
 ### Audience Type
+
 - peer / colleague
 - manager
 - direct report
@@ -172,6 +179,7 @@ Include the following user controls:
 - custom
 
 ### Message Intent
+
 - request
 - update
 - feedback
@@ -181,11 +189,13 @@ Include the following user controls:
 - other
 
 ### Feedback Style
+
 - concise
 - balanced
 - detailed
 
 ### Intervention Mode
+
 - gentle suggestions
 - direct coaching
 
@@ -197,7 +207,7 @@ These controls should influence the prompt sent to the LLM.
 
 Use the OpenAI API to analyze messages.
 
-The model should NOT produce vague writing advice. It should act like a workplace communication coach and generate feedback tied to the selected communication dimensions.
+The model should NOT produce vague writing advice. It should act like a workplace Communication Cue and generate feedback tied to the selected communication dimensions.
 
 For each analysis, generate structured JSON with fields like:
 
@@ -212,6 +222,7 @@ For each analysis, generate structured JSON with fields like:
 Make the output easy to parse and render.
 
 Use a strong system prompt that instructs the model to:
+
 - prioritize actionable feedback
 - avoid over-policing tone
 - avoid excessive rewriting
@@ -229,6 +240,7 @@ Also ensure it does NOT force every message to sound overly cheerful or overly c
 Design a clean, minimal interface suitable for a research demo.
 
 Requirements:
+
 - polished but lightweight
 - good spacing and typography
 - easy to understand in under 1 minute
@@ -248,7 +260,9 @@ Please make the UI feel credible for an HCI research prototype, not like a gener
 Add lightweight features that support a future user study:
 
 ### A. Save interaction history
+
 Each review/reflection should be stored locally with:
+
 - timestamp
 - input text
 - selected goals
@@ -257,18 +271,23 @@ Each review/reflection should be stored locally with:
 - feedback result
 
 ### B. Self-rating after feedback
+
 After each result, let the user rate:
+
 - usefulness (1–5)
 - relevance (1–5)
 - whether they would apply the advice (yes/no)
 
 ### C. Export data
+
 Allow exporting all saved sessions as JSON for later analysis.
 
 ### D. Demo seed examples
+
 Add 5 example workplace scenarios users can click to populate the input.
 
 Examples:
+
 - asking a teammate for a delayed update
 - giving constructive feedback to a direct report
 - clarifying vague ownership on a task
@@ -280,10 +299,12 @@ Examples:
 ## 7. Prompt Design
 
 Please create prompt templates for both:
+
 - pre-send review
 - post-hoc reflection
 
 The prompts should include:
+
 - selected communication dimensions
 - audience type
 - message intent
@@ -291,6 +312,7 @@ The prompts should include:
 - instruction to return structured JSON only
 
 Also create a small prompt-config module so I can easily edit:
+
 - dimension descriptions
 - tone of coaching
 - output verbosity
@@ -302,6 +324,7 @@ Also create a small prompt-config module so I can easily edit:
 Please build the codebase so it is easy for one researcher to understand and modify.
 
 Requirements:
+
 - TypeScript throughout
 - clear folder structure
 - reusable components
@@ -313,6 +336,7 @@ Requirements:
 - README with setup instructions
 
 Please include:
+
 - a clear project structure
 - installation steps
 - how to run locally
@@ -326,23 +350,27 @@ Please include:
 Implement in this order:
 
 Phase 1:
+
 - set up app shell
 - build navigation and layout
 - create dimension + context controls
 - create input forms for both modes
 
 Phase 2:
+
 - implement OpenAI integration
 - implement structured prompting
 - render parsed results cleanly
 
 Phase 3:
+
 - add local session logging
 - add self-ratings
 - add JSON export
 - add seed scenarios
 
 Phase 4:
+
 - improve UI polish
 - improve error handling
 - finalize README
@@ -371,6 +399,7 @@ This is not an employee surveillance tool.
 This is not a productivity scoring system.
 
 It is a human-centered communication support tool that:
+
 - helps people reflect
 - helps people communicate more clearly and supportively
 - respects user intent
@@ -384,6 +413,7 @@ Please reflect that philosophy in the copy, prompt design, and interaction desig
 ## 12. Nice-to-Have Features (only if simple)
 
 If these are easy to add without much complexity, include them:
+
 - toggle to show/hide rewrite
 - side-by-side original vs suggested version
 - badge labels showing which feedback maps to which dimension
@@ -397,6 +427,7 @@ But do not let these delay the core build.
 ## 13. Start Now
 
 Please:
+
 1. propose a clean folder structure
 2. scaffold the app
 3. implement the first runnable version

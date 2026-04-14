@@ -7,10 +7,10 @@ export default function HomePage() {
       {/* Hero */}
       <div className="max-w-2xl">
         <h1 className="text-3xl font-semibold text-gray-900 tracking-tight">
-          CommCoach
+          CommCue
         </h1>
         <p className="mt-3 text-base text-gray-600 leading-relaxed">
-          A human-centered communication coach for workplace messaging. Not an auto-writer, not a
+          A human-centered Communication Cue for workplace messaging. Not an auto-writer, not a
           surveillance tool — a reflective partner that helps you communicate more clearly and
           supportively.
         </p>
@@ -79,7 +79,7 @@ export default function HomePage() {
           {[
             {
               title: "Augmentation, not automation",
-              desc: "CommCoach helps you think, not think for you. You always make the final call.",
+              desc: "CommCue helps you think, not think for you. You always make the final call.",
             },
             {
               title: "Your voice, preserved",

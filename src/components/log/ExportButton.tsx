@@ -9,7 +9,7 @@ export default function ExportButton() {
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = "commcoach-sessions.json";
+    a.download = "CommCue-sessions.json";
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);

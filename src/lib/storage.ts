@@ -2,7 +2,7 @@ import type { Session, SessionRating } from "@/types";
 
 // ── localStorage fallback ────────────────────────────────────────────────────
 
-const LS_KEY = "commcoach_sessions";
+const LS_KEY = "CommCue_sessions";
 
 function lsGet(): Session[] {
   if (typeof window === "undefined") return [];

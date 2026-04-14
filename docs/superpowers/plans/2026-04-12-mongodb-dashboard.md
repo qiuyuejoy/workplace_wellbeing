@@ -12,26 +12,27 @@
 
 ## File Map
 
-| File | Action | Purpose |
-|---|---|---|
-| `src/lib/mongodb.ts` | Create | MongoDB client singleton |
-| `src/app/api/sessions/route.ts` | Create | GET list + POST create session |
-| `src/app/api/sessions/[id]/route.ts` | Create | PATCH rating + DELETE session |
-| `src/lib/storage.ts` | Rewrite | Async API-backed session functions |
-| `src/app/pre-send/page.tsx` | Modify | Await async saveSession/updateRating |
-| `src/app/reflect/page.tsx` | Modify | Await async saveSession/updateRating |
-| `src/app/real-time/page.tsx` | Modify | Await async saveSession (if added) |
-| `src/app/log/page.tsx` | Modify | Fetch sessions from API via useEffect |
-| `src/app/dashboard/page.tsx` | Create | Progress dashboard with 6 charts |
-| `src/components/layout/Nav.tsx` | Modify | Add Dashboard nav link |
-| `.env.local` | Modify | Add MONGODB_URI |
-| `package.json` | Modify | Add mongodb + recharts deps |
+| File                                 | Action  | Purpose                               |
+| ------------------------------------ | ------- | ------------------------------------- |
+| `src/lib/mongodb.ts`                 | Create  | MongoDB client singleton              |
+| `src/app/api/sessions/route.ts`      | Create  | GET list + POST create session        |
+| `src/app/api/sessions/[id]/route.ts` | Create  | PATCH rating + DELETE session         |
+| `src/lib/storage.ts`                 | Rewrite | Async API-backed session functions    |
+| `src/app/pre-send/page.tsx`          | Modify  | Await async saveSession/updateRating  |
+| `src/app/reflect/page.tsx`           | Modify  | Await async saveSession/updateRating  |
+| `src/app/real-time/page.tsx`         | Modify  | Await async saveSession (if added)    |
+| `src/app/log/page.tsx`               | Modify  | Fetch sessions from API via useEffect |
+| `src/app/dashboard/page.tsx`         | Create  | Progress dashboard with 6 charts      |
+| `src/components/layout/Nav.tsx`      | Modify  | Add Dashboard nav link                |
+| `.env.local`                         | Modify  | Add MONGODB_URI                       |
+| `package.json`                       | Modify  | Add mongodb + recharts deps           |
 
 ---
 
 ## Task 1: Install dependencies + add MONGODB_URI
 
 **Files:**
+
 - Modify: `package.json`
 - Modify: `.env.local`
 
@@ -49,10 +50,10 @@ Expected: both packages appear in `package.json` dependencies.
 Open `.env.local` and add:
 
 ```
-MONGODB_URI=mongodb+srv://<user>:<pass>@<cluster>.mongodb.net/commcoach?retryWrites=true&w=majority
+MONGODB_URI=mongodb+srv://<user>:<pass>@<cluster>.mongodb.net/CommCue?retryWrites=true&w=majority
 ```
 
-Replace with your actual Atlas connection string. The database name `commcoach` will be created automatically on first write.
+Replace with your actual Atlas connection string. The database name `CommCue` will be created automatically on first write.
 
 - [ ] **Step 3: Verify TypeScript still builds**
 
@@ -74,16 +75,17 @@ git commit -m "feat: add mongodb and recharts dependencies"
 ## Task 2: MongoDB client singleton
 
 **Files:**
+
 - Create: `src/lib/mongodb.ts`
 
 - [ ] **Step 1: Create the file**
 
 ```typescript
 // src/lib/mongodb.ts
-import { MongoClient, Db } from "mongodb";
+import { MongoClient, Db } from 'mongodb';
 
 if (!process.env.MONGODB_URI) {
-  throw new Error("MONGODB_URI is not set in environment variables.");
+  throw new Error('MONGODB_URI is not set in environment variables.');
 }
 
 const uri = process.env.MONGODB_URI;
@@ -102,7 +104,7 @@ async function createClient(): Promise<MongoClient> {
 export async function getDb(): Promise<Db> {
   let client: MongoClient;
 
-  if (process.env.NODE_ENV === "development") {
+  if (process.env.NODE_ENV === 'development') {
     // Reuse connection across hot reloads in dev
     if (!global._mongoClient) {
       global._mongoClient = await createClient();
@@ -112,7 +114,7 @@ export async function getDb(): Promise<Db> {
     client = await createClient();
   }
 
-  return client.db("commcoach");
+  return client.db('CommCue');
 }
 ```
 
@@ -136,6 +138,7 @@ git commit -m "feat: add MongoDB client singleton"
 ## Task 3: Sessions API routes
 
 **Files:**
+
 - Create: `src/app/api/sessions/route.ts`
 - Create: `src/app/api/sessions/[id]/route.ts`
 
@@ -143,15 +146,15 @@ git commit -m "feat: add MongoDB client singleton"
 
 ```typescript
 // src/app/api/sessions/route.ts
-import { NextRequest, NextResponse } from "next/server";
-import { getDb } from "@/lib/mongodb";
-import type { Session } from "@/types";
+import { NextRequest, NextResponse } from 'next/server';
+import { getDb } from '@/lib/mongodb';
+import type { Session } from '@/types';
 
 export async function GET() {
   try {
     const db = await getDb();
     const docs = await db
-      .collection("sessions")
+      .collection('sessions')
       .find({})
       .sort({ createdAt: -1 })
       .toArray();
@@ -160,24 +163,26 @@ export async function GET() {
     const sessions = docs.map(({ _id, ...s }) => s) as Session[];
     return NextResponse.json({ sessions });
   } catch (err) {
-    const message = err instanceof Error ? err.message : "Failed to fetch sessions.";
+    const message =
+      err instanceof Error ? err.message : 'Failed to fetch sessions.';
     return NextResponse.json({ error: message }, { status: 500 });
   }
 }
 
 export async function POST(req: NextRequest) {
   try {
-    const body = await req.json() as Omit<Session, "id" | "createdAt">;
+    const body = (await req.json()) as Omit<Session, 'id' | 'createdAt'>;
     const session: Session = {
       ...body,
       id: crypto.randomUUID(),
       createdAt: new Date().toISOString(),
     };
     const db = await getDb();
-    await db.collection("sessions").insertOne(session);
+    await db.collection('sessions').insertOne(session);
     return NextResponse.json({ id: session.id });
   } catch (err) {
-    const message = err instanceof Error ? err.message : "Failed to save session.";
+    const message =
+      err instanceof Error ? err.message : 'Failed to save session.';
     return NextResponse.json({ error: message }, { status: 500 });
   }
 }
@@ -187,37 +192,39 @@ export async function POST(req: NextRequest) {
 
 ```typescript
 // src/app/api/sessions/[id]/route.ts
-import { NextRequest, NextResponse } from "next/server";
-import { getDb } from "@/lib/mongodb";
-import type { SessionRating } from "@/types";
+import { NextRequest, NextResponse } from 'next/server';
+import { getDb } from '@/lib/mongodb';
+import type { SessionRating } from '@/types';
 
 export async function PATCH(
   req: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
+  { params }: { params: Promise<{ id: string }> },
 ) {
   try {
     const { id } = await params;
-    const { rating } = await req.json() as { rating: SessionRating };
+    const { rating } = (await req.json()) as { rating: SessionRating };
     const db = await getDb();
-    await db.collection("sessions").updateOne({ id }, { $set: { rating } });
+    await db.collection('sessions').updateOne({ id }, { $set: { rating } });
     return NextResponse.json({ ok: true });
   } catch (err) {
-    const message = err instanceof Error ? err.message : "Failed to update rating.";
+    const message =
+      err instanceof Error ? err.message : 'Failed to update rating.';
     return NextResponse.json({ error: message }, { status: 500 });
   }
 }
 
 export async function DELETE(
   _req: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
+  { params }: { params: Promise<{ id: string }> },
 ) {
   try {
     const { id } = await params;
     const db = await getDb();
-    await db.collection("sessions").deleteOne({ id });
+    await db.collection('sessions').deleteOne({ id });
     return NextResponse.json({ ok: true });
   } catch (err) {
-    const message = err instanceof Error ? err.message : "Failed to delete session.";
+    const message =
+      err instanceof Error ? err.message : 'Failed to delete session.';
     return NextResponse.json({ error: message }, { status: 500 });
   }
 }
@@ -243,17 +250,18 @@ git commit -m "feat: add sessions API routes (GET, POST, PATCH, DELETE)"
 ## Task 4: Rewrite storage.ts
 
 **Files:**
+
 - Rewrite: `src/lib/storage.ts`
 
 - [ ] **Step 1: Replace entire file**
 
 ```typescript
 // src/lib/storage.ts
-import type { Session, SessionRating } from "@/types";
+import type { Session, SessionRating } from '@/types';
 
 export async function getSessions(): Promise<Session[]> {
   try {
-    const res = await fetch("/api/sessions");
+    const res = await fetch('/api/sessions');
     if (!res.ok) return [];
     const data = await res.json();
     return (data.sessions ?? []) as Session[];
@@ -263,30 +271,30 @@ export async function getSessions(): Promise<Session[]> {
 }
 
 export async function saveSession(
-  session: Omit<Session, "id" | "createdAt">
+  session: Omit<Session, 'id' | 'createdAt'>,
 ): Promise<string> {
   try {
-    const res = await fetch("/api/sessions", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
+    const res = await fetch('/api/sessions', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(session),
     });
-    if (!res.ok) return "";
+    if (!res.ok) return '';
     const data = await res.json();
-    return (data.id as string) ?? "";
+    return (data.id as string) ?? '';
   } catch {
-    return "";
+    return '';
   }
 }
 
 export async function updateRating(
   sessionId: string,
-  rating: SessionRating
+  rating: SessionRating,
 ): Promise<void> {
   try {
     await fetch(`/api/sessions/${sessionId}`, {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ rating }),
     });
   } catch {
@@ -296,7 +304,7 @@ export async function updateRating(
 
 export async function deleteSession(sessionId: string): Promise<void> {
   try {
-    await fetch(`/api/sessions/${sessionId}`, { method: "DELETE" });
+    await fetch(`/api/sessions/${sessionId}`, { method: 'DELETE' });
   } catch {
     // fail silently
   }
@@ -330,6 +338,7 @@ git commit -m "feat: replace localStorage storage with async MongoDB API calls"
 ## Task 5: Update page components to await async storage
 
 **Files:**
+
 - Modify: `src/app/pre-send/page.tsx`
 - Modify: `src/app/reflect/page.tsx`
 - Modify: `src/app/log/page.tsx`
@@ -339,11 +348,13 @@ git commit -m "feat: replace localStorage storage with async MongoDB API calls"
 In `src/app/pre-send/page.tsx`:
 
 1. Remove the dynamic import of `updateRating` — import it at the top:
+
 ```typescript
-import { saveSession, updateRating } from "@/lib/storage";
+import { saveSession, updateRating } from '@/lib/storage';
 ```
 
 2. In `handleSubmit`, `saveSession` is already called inside an `async` function — add `await`:
+
 ```typescript
 // before:
 const id = saveSession({ mode: "pre-send", message, ... });
@@ -353,6 +364,7 @@ const id = await saveSession({ mode: "pre-send", message, ... });
 ```
 
 3. Update the `SelfRatingForm` onSubmit to use the top-level import:
+
 ```typescript
 <SelfRatingForm
   onSubmit={(rating) => {
@@ -366,11 +378,13 @@ const id = await saveSession({ mode: "pre-send", message, ... });
 In `src/app/reflect/page.tsx`, apply the same two changes:
 
 1. Import `updateRating` at top (it's already imported from `@/lib/storage` — just ensure it's there):
+
 ```typescript
-import { saveSession, updateRating } from "@/lib/storage";
+import { saveSession, updateRating } from '@/lib/storage';
 ```
 
 2. Add `await` to `saveSession` call in `handleSubmit`:
+
 ```typescript
 const id = await saveSession({ mode: "reflect", message, ... });
 ```
@@ -395,20 +409,22 @@ useEffect(() => {
 ```
 
 Also update the export button handler to await `exportJSON()`:
+
 ```typescript
 async function handleExport() {
   const json = await exportJSON();
-  const blob = new Blob([json], { type: "application/json" });
+  const blob = new Blob([json], { type: 'application/json' });
   const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
+  const a = document.createElement('a');
   a.href = url;
-  a.download = "commcoach-sessions.json";
+  a.download = 'CommCue-sessions.json';
   a.click();
   URL.revokeObjectURL(url);
 }
 ```
 
 And update `deleteSession` calls to await:
+
 ```typescript
 await deleteSession(id);
 setSessions((prev) => prev.filter((s) => s.id !== id));
@@ -434,6 +450,7 @@ git commit -m "feat: update pages to use async MongoDB-backed storage"
 ## Task 6: Dashboard page
 
 **Files:**
+
 - Create: `src/app/dashboard/page.tsx`
 
 - [ ] **Step 1: Create the dashboard page**
@@ -669,6 +686,7 @@ git commit -m "feat: add progress dashboard with dimension score charts"
 ## Task 7: Add Dashboard to navigation
 
 **Files:**
+
 - Modify: `src/components/layout/Nav.tsx`
 
 - [ ] **Step 1: Add Dashboard link**
@@ -677,12 +695,12 @@ In `src/components/layout/Nav.tsx`, update `NAV_LINKS`:
 
 ```typescript
 const NAV_LINKS = [
-  { href: "/", label: "Home" },
-  { href: "/pre-send", label: "Pre-send" },
-  { href: "/real-time", label: "Real-time" },
-  { href: "/reflect", label: "Reflect" },
-  { href: "/log", label: "Session Log" },
-  { href: "/dashboard", label: "Dashboard" },
+  { href: '/', label: 'Home' },
+  { href: '/pre-send', label: 'Pre-send' },
+  { href: '/real-time', label: 'Real-time' },
+  { href: '/reflect', label: 'Reflect' },
+  { href: '/log', label: 'Session Log' },
+  { href: '/dashboard', label: 'Dashboard' },
 ];
 ```
 

@@ -20,10 +20,10 @@ export default function Nav() {
         <div className="flex h-14 items-center justify-between">
           <Link href="/" className="flex items-center gap-2">
             <span className="text-base font-semibold text-gray-900 tracking-tight">
-              CommCoach
+              CommCue
             </span>
             <span className="hidden sm:inline text-xs text-gray-400 font-normal">
-              communication coach
+              Communication Cue
             </span>
           </Link>
           <div className="flex items-center gap-1">

@@ -3,8 +3,8 @@ import "./globals.css";
 import Nav from "@/components/layout/Nav";
 
 export const metadata: Metadata = {
-  title: "CommCoach",
-  description: "A human-centered AI communication coach for workplace messaging.",
+  title: "CommCue",
+  description: "A human-centered AI Communication Cue for workplace messaging.",
 };
 
 export default function RootLayout({

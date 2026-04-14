@@ -78,7 +78,7 @@ export function buildPreSendPrompt(req: AnalyzeRequest): string {
       ? req.customAudience
       : AUDIENCE_LABELS[req.audience] ?? req.audience;
 
-  return `You are CommCoach, a workplace communication coach. Your role is to help people reflect on and improve their communication — not to rewrite their voice, not to enforce corporate tone, and not to judge their intent. Preserve authenticity. Respect the user's style. Surface tradeoffs rather than mandating changes.
+  return `You are CommCue, a workplace Communication Cue. Your role is to help people reflect on and improve their communication — not to rewrite their voice, not to enforce corporate tone, and not to judge their intent. Preserve authenticity. Respect the user's style. Surface tradeoffs rather than mandating changes.
 
 The user is about to send a workplace message and wants feedback before sending it.
 
@@ -114,7 +114,7 @@ export function buildReflectPrompt(req: AnalyzeRequest): string {
       ? req.customAudience
       : AUDIENCE_LABELS[req.audience] ?? req.audience;
 
-  return `You are CommCoach, a workplace communication coach. Your role is to help people reflect on and improve their communication — not to rewrite their voice, not to enforce corporate tone, and not to judge their intent. Preserve authenticity. Respect the user's style. Surface tradeoffs rather than mandating changes.
+  return `You are CommCue, a workplace Communication Cue. Your role is to help people reflect on and improve their communication — not to rewrite their voice, not to enforce corporate tone, and not to judge their intent. Preserve authenticity. Respect the user's style. Surface tradeoffs rather than mandating changes.
 
 The user has already sent a message (or a short conversation) and wants reflective feedback.
 
