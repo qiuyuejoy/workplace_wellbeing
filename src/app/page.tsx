@@ -12,16 +12,13 @@ export default function HomePage() {
 
         <ul className="mt-3 text-base text-gray-600 leading-relaxed list-disc pl-5 space-y-2">
           <li>
-            Workplace communication is a key driver of team performance, collaboration quality, and organizational well-being.
+            Workplace communication shapes collaboration, performance, and well-being.
           </li>
           <li>
-            Many communication breakdowns arise from unclear expectations, ineffective feedback, and limited emotional support.
+            Breakdowns often stem from unclear expectations, ineffective feedback, and limited emotional support.
           </li>
           <li>
-            Existing AI tools primarily focus on writing productivity, text generation, or role-play training.
-          </li>
-          <li>
-            We present a personalized, relationally adaptive communication support system that provides in-situ and reflective feedback to help users improve workplace communication quality over time.
+            CommCue provides personalized, context-aware feedback, and reflective learning to help people improve communication skills.
           </li>
         </ul>
       </div>
@@ -37,8 +34,8 @@ export default function HomePage() {
             <h2 className="text-sm font-semibold text-gray-900">Pre-send Review</h2>
           </div>
           <p className="text-sm text-gray-500 leading-relaxed">
-            Draft a message and get feedback before you send it. The coach will highlight strengths,
-            flag potential issues, and offer specific suggestions tied to your goals.
+            Draft a message and get feedback before sending.
+            CommCue highlights strengths, flags issues, and suggests revisions aligned with your goals.
           </p>
           <p className="mt-3 text-xs font-medium text-gray-400 group-hover:text-gray-600 transition-colors">
             Try it →
@@ -54,8 +51,8 @@ export default function HomePage() {
             <h2 className="text-sm font-semibold text-gray-900">Post-hoc Reflection</h2>
           </div>
           <p className="text-sm text-gray-500 leading-relaxed">
-            Paste a past conversation/meeting transcript. Get reflective feedback on what worked,
-            what you might refine, and what to try next time.
+            Review a past message or meeting transcript.
+            CommCue surfaces what worked, what to improve, and what to try next time.
           </p>
           <p className="mt-3 text-xs font-medium text-gray-400 group-hover:text-gray-600 transition-colors">
             Try it →
@@ -67,7 +64,7 @@ export default function HomePage() {
       <div>
         <h2 className="text-sm font-semibold text-gray-700 mb-3">Communication Dimensions</h2>
         <p className="text-sm text-gray-500 mb-4">
-          Choose which aspects of communication to focus on. You can mix and match per interaction.
+          Choose the qualities to focus on for this interaction; CommCue can auto choose based on the context, intent, and audience.
         </p>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
           {DIMENSIONS.map((dim) => (
@@ -88,16 +85,16 @@ export default function HomePage() {
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           {[
             {
-              title: "Personalized improvement",
-              desc: "Feedback is tailored to your improvement goals, while preserving the strengths and tone that make your communication your own.",
+              title: "Personalized Improvement",
+              desc: "Feedback is tailored to your goals while preserving your voice and strengths.",
             },
             {
-              title: "Relationship- and context-aware support",
-              desc: "Adapt feedback to the people you reply with — their roles, preferences, and interaction patterns within your team.",
+              title: "Context-aware Support",
+              desc: "Suggestions adapt to the relationship, situation, and communication setting.",
             },
             {
-              title: "Supporting long-term skill development",
-              desc: "Reflect on a past conversation or meeting to uncover strengths, missed opportunities, and actionable strategies—so you can build better communication habits over time.",
+              title: "Long-term Skill Building",
+              desc: "Reflection helps users identify patterns and build stronger communication habits over time.",
             },
           ].map((item) => (
             <div key={item.title}>
