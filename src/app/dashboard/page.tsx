@@ -146,7 +146,7 @@ function DimensionChart({
 
 // ── main page ──────────────────────────────────────────────────────────────
 
-export default function Skill TrendsPage() {
+export default function SkillTrendsPage() {
   const [sessions, setSessions] = useState<Session[]>([]);
 
   useEffect(() => {
