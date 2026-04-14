@@ -2,9 +2,9 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Replace localStorage with MongoDB and add a `/Skill Trends` page showing dimension score trends over time.
+**Goal:** Replace localStorage with MongoDB and add a `/trends` page showing dimension score trends over time.
 
-**Architecture:** Sessions are stored in a MongoDB `sessions` collection via four Next.js API routes. The existing `storage.ts` is rewritten to call these routes (same function signatures, now async). A new `/Skill Trends` page fetches all sessions and renders 6 Recharts ComposedCharts — one per dimension — showing raw score dots and a weekly average trend line.
+**Architecture:** Sessions are stored in a MongoDB `sessions` collection via four Next.js API routes. The existing `storage.ts` is rewritten to call these routes (same function signatures, now async). A new `/trends` page fetches all sessions and renders 6 Recharts ComposedCharts — one per dimension — showing raw score dots and a weekly average trend line.
 
 **Tech Stack:** Next.js 16 App Router, TypeScript, MongoDB Node.js driver, Recharts
 
@@ -22,7 +22,7 @@
 | `src/app/reflect/page.tsx`           | Modify  | Await async saveSession/updateRating  |
 | `src/app/real-time/page.tsx`         | Modify  | Await async saveSession (if added)    |
 | `src/app/log/page.tsx`               | Modify  | Fetch sessions from API via useEffect |
-| `src/app/Skill Trends/page.tsx`      | Create  | Progress Skill Trends with 6 charts   |
+| `src/app/trends/page.tsx`            | Create  | Progress Skill Trends with 6 charts   |
 | `src/components/layout/Nav.tsx`      | Modify  | Add Skill Trends nav link             |
 | `.env.local`                         | Modify  | Add MONGODB_URI                       |
 | `package.json`                       | Modify  | Add mongodb + recharts deps           |
@@ -451,12 +451,12 @@ git commit -m "feat: update pages to use async MongoDB-backed storage"
 
 **Files:**
 
-- Create: `src/app/Skill Trends/page.tsx`
+- Create: `src/app/trends/page.tsx`
 
 - [ ] **Step 1: Create the Skill Trends page**
 
 ```typescript
-// src/app/Skill Trends/page.tsx
+// src/app/trends/page.tsx
 "use client";
 
 import { useEffect, useState } from "react";
@@ -677,7 +677,7 @@ Expected: no errors for this file.
 - [ ] **Step 3: Commit**
 
 ```bash
-git add src/app/Skill Trends/page.tsx
+git add src/app/trends/page.tsx
 git commit -m "feat: add progress Skill Trends with dimension score charts"
 ```
 
@@ -700,7 +700,7 @@ const NAV_LINKS = [
   { href: '/real-time', label: 'Real-time' },
   { href: '/reflect', label: 'Reflect' },
   { href: '/log', label: 'Session Log' },
-  { href: '/Skill Trends', label: 'Skill Trends' },
+  { href: '/trends', label: 'Skill Trends' },
 ];
 ```
 
@@ -710,7 +710,7 @@ const NAV_LINKS = [
 npm run build 2>&1 | tail -15
 ```
 
-Expected: all 7 routes present: `/`, `/pre-send`, `/real-time`, `/reflect`, `/log`, `/Skill Trends`, `/api/analyze`, `/api/sessions`, `/api/sessions/[id]`. Zero TypeScript errors.
+Expected: all 7 routes present: `/`, `/pre-send`, `/real-time`, `/reflect`, `/log`, `/trends`, `/api/analyze`, `/api/sessions`, `/api/sessions/[id]`. Zero TypeScript errors.
 
 - [ ] **Step 3: Final commit**
 
@@ -727,7 +727,7 @@ git commit -m "feat: add Skill Trends link to navigation"
 2. Submit a pre-send analysis → session appears in `/log` after refresh (from MongoDB)
 3. Submit a post-reflection analysis → session has dimension scores (1–5)
 4. Rate a session → rating persists after page refresh
-5. `/Skill Trends` loads with summary row (total sessions, this week, top mode)
+5. `/trends` loads with summary row (total sessions, this week, top mode)
 6. After 2+ reflect sessions → all 6 dimension charts show dots + trend line
 7. Fewer than 2 scored sessions → empty state message shown
 8. Export from `/log` → downloads valid JSON from MongoDB data

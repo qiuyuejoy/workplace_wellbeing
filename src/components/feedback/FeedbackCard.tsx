@@ -1,5 +1,6 @@
 import type { FeedbackResult } from "@/types";
 import SummaryBanner from "./SummaryBanner";
+import DimensionScores from "./DimensionScores";
 import StrengthsSection from "./StrengthsSection";
 import IssuesSection from "./IssuesSection";
 import SuggestionsSection from "./SuggestionsSection";
@@ -21,6 +22,10 @@ export default function FeedbackCard({ result, originalMessage }: Props) {
 
       <div className="px-5 py-4 space-y-5">
         <SummaryBanner summary={result.summary} />
+
+        {result.dimension_scores && (
+          <DimensionScores dimensionScores={result.dimension_scores} />
+        )}
 
         {result.strengths.length > 0 && <StrengthsSection strengths={result.strengths} />}
         {result.issues.length > 0 && <IssuesSection issues={result.issues} />}
