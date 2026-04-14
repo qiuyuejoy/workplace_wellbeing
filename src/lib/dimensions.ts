@@ -30,7 +30,7 @@ export const DIMENSIONS: Dimension[] = [
     id: "responsibility",
     label: "Responsibility",
     description: "Does the message convey clear ownership, accountability, and next steps?",
-    color: "amber",
+    color: "blue",
     promptInstruction:
       "Evaluate whether ownership is explicitly stated, next steps are concrete, and commitments are specific rather than passive or vague.",
   },
