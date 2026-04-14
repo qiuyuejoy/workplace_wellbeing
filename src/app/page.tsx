@@ -9,11 +9,21 @@ export default function HomePage() {
         <h1 className="text-3xl font-semibold text-gray-900 tracking-tight">
           CommCue
         </h1>
-        <p className="mt-3 text-base text-gray-600 leading-relaxed">
-          A human-centered Communication Cue for workplace messaging. Not an auto-writer, not a
-          surveillance tool — a reflective partner that helps you communicate more clearly and
-          supportively.
-        </p>
+
+        <ul className="mt-3 text-base text-gray-600 leading-relaxed list-disc pl-5 space-y-2">
+          <li>
+            Workplace communication is a key driver of team performance, collaboration quality, and organizational well-being.
+          </li>
+          <li>
+            Many communication breakdowns arise from unclear expectations, ineffective feedback, and limited emotional support.
+          </li>
+          <li>
+            Existing AI tools primarily focus on writing productivity, text generation, or role-play training.
+          </li>
+          <li>
+            We present a personalized, relationally adaptive communication support system that provides in-situ and reflective feedback to help users improve workplace communication quality over time.
+          </li>
+        </ul>
       </div>
 
       {/* Modes */}
